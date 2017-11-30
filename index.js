@@ -11,6 +11,7 @@ klark.run( {
 	globalRegistrationModuleName: 'ProtoModule',
 	moduleAlias: {
 		'_': '$lodash',
-		'cron': '$node-schedule'
+		'cron': '$node-schedule',
+		'bus': '$hermes-bus'
 	}
 } );
