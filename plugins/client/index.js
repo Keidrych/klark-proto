@@ -1,21 +1,36 @@
-ProtoModule( module, 'client', function ( $axios, cron, core, config, bus ) {
-	bus.subscribe( {
-		onStart: function () {
-			console.log( 'client bus' )
-			core.listen( config.PORT )
+ProtoModule( module, 'client', function ( $axios, cron, core, config ) {
 
-			var j = cron.scheduleJob( '* * * * * *', function () {
-				console.log( 'Client Ping Event' )
-				bus.client.triggerPing()
-			} )
-		}
-	} )
+	// create a 'Services' module for remote enabled services and events
+	//
+	// Levels of engagement
+	// - Modue -> local components and their Dependency Injections
+	// - Local events
+	// - Remote Events (integration)
+	//
+	// Keep everything as self-contained as possible
 
-	bus.subscribe( 'client', {
-		onPing: function () {
-			$axios( 'http://localhost:3000/' ).then( ( res ) => {
-				console.log( res.data )
-			} )
+
+	var client = {
+		name: 'client',
+		events: {
+			'core.start' ( payload ) {
+				var log = this.logger
+				log.info( 'core started: ', payload )
+				core.app.listen( config.PORT )
+
+				var j = cron.scheduleJob( '* * * * * *', function () {
+					log.info( 'Client Ping Event' )
+					core.broker.emit( 'core.ping', true )
+				} )
+			},
+			'core.ping' ( payload ) {
+				var log = this.logger
+				$axios( 'http://localhost:3000/' ).then( ( res ) => {
+					log.info( res.data )
+				} )
+			}
 		}
-	} )
+	}
+
+	core.broker.createService( client )
 } )
