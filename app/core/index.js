@@ -1,31 +1,27 @@
-ProtoModule( module, 'core', function ( $express, config, $moleculer ) {
+ProtoModule( module, 'core', function ( $express, config, broker ) {
 	var app = $express()
-	var broker = new $moleculer.ServiceBroker( {
-		namespace: 'core',
-		logger: console
-	} )
+
+	app.listen( config.PORT )
 
 	app.get( '/', function ( req, res ) {
 		res.send( 'Hello World' )
 	} )
 
-	// bus.subscribe( {
-	// 	onStart: function () {
-	// 		console.log( 'core bus' )
-	// 	}
-	// } )
-
-	// broker.on( 'core.start', () => {
-	// 	console.log( 'core started' )
-	// } )
-	broker.start().then( () => {
-		broker.repl()
-		broker.emit( 'core.start' )
+	broker.createService( {
+		name: 'core',
+		actions: {
+			addRoute( ctx ) {
+				app.use( ctx.params )
+				ctx.emit( 'core.addRoute' )
+			}
+		},
+		events: {
+			'core.addRoute' () {
+				this.logger.info( 'Broker: core route added' )
+			}
+		},
+		started() {
+			this.logger.info( 'Broker: Service added - core' )
+		}
 	} )
-
-	return {
-		app,
-		broker
-	}
-	// app.listen( config.PORT )
 } )

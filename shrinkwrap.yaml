@@ -6,6 +6,7 @@ dependencies:
   hermes-bus: 2.2.10
   klark-js: 1.2.3
   moleculer: 0.11.6
+  moleculer-web: 0.6.0-beta1
   node-schedule: 1.2.5
 devDependencies:
   moleculer-repl: 0.3.1
@@ -1081,6 +1082,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-TkMekrEalzFjaqH5yNHMvP2reN8=
+  /isstream/0.1.2:
+    dev: false
+    resolution:
+      integrity: sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
   /json-stable-stringify/1.0.1:
     dependencies:
       jsonify: 0.0.0
@@ -1251,6 +1256,22 @@ packages:
       node: '>= 6.x.x'
     resolution:
       integrity: sha1-9RVIIoMW41/NE1NWibJxnm0qV9E=
+  /moleculer-web/0.6.0-beta1:
+    dependencies:
+      body-parser: 1.18.2
+      es6-error: 4.0.2
+      isstream: 0.1.2
+      lodash: 4.17.4
+      nanomatch: 1.2.5
+      path-to-regexp: 1.7.0
+      serve-static: 1.13.1
+    dev: false
+    engines:
+      node: '>= 6.x.x'
+    peerDependencies:
+      moleculer: '>= 0.10.0'
+    resolution:
+      integrity: sha1-zcvTvfSEcIkNv6VPYktNTcPPegU=
   /moleculer/0.11.6:
     dependencies:
       args: 3.0.7
@@ -1476,6 +1497,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+  /path-to-regexp/1.7.0:
+    dependencies:
+      isarray: 0.0.1
+    dev: false
+    resolution:
+      integrity: sha1-Wf3g9DW62suhA6hOnTvGTpa5k30=
   /pify/2.3.0:
     dev: false
     engines:
@@ -2104,4 +2131,5 @@ specifiers:
   klark-js: ^1.2.3
   moleculer: ^0.11.6
   moleculer-repl: ^0.3.1
+  moleculer-web: ^0.6.0-beta1
   node-schedule: ^1.2.5

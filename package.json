@@ -16,6 +16,7 @@
     "hermes-bus": "^2.2.10",
     "klark-js": "^1.2.3",
     "moleculer": "^0.11.6",
+    "moleculer-web": "^0.6.0-beta1",
     "node-schedule": "^1.2.5"
   },
   "devDependencies": {
