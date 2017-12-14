@@ -1,4 +1,4 @@
-ProtoModule( module, 'client', function ( $axios, cron, broker, broker ) {
+ProtoModule( module, 'client', function ( $axios, cron, broker ) {
 
 	// create a 'Services' module for remote enabled services and events
 	//

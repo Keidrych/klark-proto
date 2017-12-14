@@ -1,12 +1,19 @@
-ProtoModule( module, 'broker', function ( $moleculer ) {
-	var broker = new $moleculer.ServiceBroker( {
-		namespace: 'proto',
-		logger: console
-	} )
+let debug = npm.debug( getModuleName( __filename, __dirname ) )
 
-	broker.start().then( () => {
-		broker.repl()
-	} )
-
-	return broker
-} )
+module.exports = {
+	load: function () {
+		debug( 'broker load() executed' )
+		// },
+		// init: function ( moleculer ) {
+		// 	global.broker = new moleculer.ServiceBroker( {
+		// 		namespace: 'proto',
+		// 		logger: console
+		// 	} )
+		//
+		// 	broker.start().then( () => {
+		// 		broker.repl()
+		// 	} )
+		//
+		// 	return broker
+	}
+}

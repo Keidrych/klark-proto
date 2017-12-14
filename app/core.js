@@ -1,7 +1,21 @@
-ProtoModule( module, 'core', function ( $express, config, broker ) {
-	var app = $express()
+var ns = {}
+const debug = npm.debug( getModuleName( __filename, __dirname ) )
 
-	app.listen( config.PORT )
+ns.load = () => {
+	debug( Object.keys( global[ 'config' ] ) )
+	var app = express()
+
+	var port = 0
+
+	if ( process.env.HEADLESS ) {
+		port = 8080
+	}
+
+	if ( !module.parent ) {
+		app.listen( port, () => {
+			console.log( `Listening on localhost:${port}` )
+		} )
+	}
 
 	app.get( '/', function ( req, res ) {
 		res.send( 'Hello World' )
@@ -24,4 +38,6 @@ ProtoModule( module, 'core', function ( $express, config, broker ) {
 			this.logger.info( 'Broker: Service added - core' )
 		}
 	} )
-} )
+}
+
+module.exports = ns
