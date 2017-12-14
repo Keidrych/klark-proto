@@ -1,19 +1,21 @@
-ProtoModule( module, 'client', function ( $axios, cron, broker ) {
+const ns = {}
+const debug = npm.debug( getModuleName( __filename, __dirname ) )
 
-	// create a 'Services' module for remote enabled services and events
-	//
-	// Levels of engagement
-	// - Modue -> local components and their Dependency Injections
-	// - Local events
-	// - Remote Events (integration)
-	// - each module is an event bus
-	//
-	// Keep everything as self-contained as possible
+// create a 'Services' module for remote enabled services and events
+//
+// Levels of engagement
+// - Modue -> local components and their Dependency Injections
+// - Local events
+// - Remote Events (integration)
+// - each module is an event bus
+//
+// Keep everything as self-contained as possible
 
-	// use 'namespace variable to define public event driven API'
-	var ns = {}
+ns.load = () => {
+	debug( 'plugin loaded' )
+}
 
-
+ns.init = () => {
 	// Moleculer Auto-Registration for Plugin Auto-Discovery
 	broker.createService( {
 		name: 'client',
@@ -21,7 +23,7 @@ ProtoModule( module, 'client', function ( $axios, cron, broker ) {
 		actions: {
 			ping( ctx ) {
 				var log = this.logger
-				return $axios( 'http://localhost:3000/' ).then( ( res ) => {
+				return npm.axios( 'http://localhost:3000/' ).then( ( res ) => {
 					return res.data
 
 				} )
@@ -34,6 +36,7 @@ ProtoModule( module, 'client', function ( $axios, cron, broker ) {
 				log.info( 'core started: ', payload )
 				// core.app.listen( config.PORT )
 
+				let cron = npm[ 'node-schedule' ]
 				var j = cron.scheduleJob( '* * * * * *', function () {
 					log.info( 'Client Ping Event' )
 					broker.emit( 'client.ping', true )
@@ -47,4 +50,6 @@ ProtoModule( module, 'client', function ( $axios, cron, broker ) {
 			broker.emit( 'core.start' )
 		}
 	} )
-} )
+}
+
+module.exports = ns

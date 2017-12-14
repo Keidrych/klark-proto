@@ -1,4 +1,4 @@
-var ns = {}
+const ns = {}
 const debug = npm.debug( getModuleName( __filename, __dirname ) )
 
 ns.load = () => {

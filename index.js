@@ -10,8 +10,13 @@ global.broker = new npm.moleculer.ServiceBroker( {
 // Variables
 const debug = npm.debug( 'root' )
 const PluginLoader = npm[ 'plugin-loader' ].PluginLoader
-const appPath = npm.path.join( npm.path.normalize( process.cwd() ), 'app' )
-const loader = new PluginLoader( [ appPath ] )
+const locations = [ 'app', 'plugins' ]
+let appPath = []
+locations.forEach( ( location ) => {
+	appPath = npm._.concat( appPath, npm.path.join( npm.path.normalize( process.cwd() ), location ) )
+} )
+debug( appPath )
+const loader = new PluginLoader( appPath )
 
 // Init / start applications
 broker.start().then( () => {
